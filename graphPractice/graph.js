@@ -1,6 +1,5 @@
 class Graph {
-  constructor(noOfVertices) {
-    this.noOfVertices = noOfVertices;
+  constructor() {
     // Map is an ES6 object
     // here we use the key of the map to hold a vertex
     // and the value holds an array of an adjacent nodes
@@ -33,9 +32,27 @@ class Graph {
     }
   }
 
-  bfs() {}
+  bfs(startingVertex) {
+    const queue = [startingVertex];
+    const visitedVertices = new Set(startingVertex);
 
-  dfs() {}
+    while (queue.length) {
+      // Visit and log out the current vertex
+      const visitedVertex = queue.shift();
+
+      console.log(visitedVertex);
+
+      // Enqueue its adjacencies
+      const adjacencies = this.adjList.get(visitedVertex);
+      adjacencies.forEach((adjacency) => {
+        if (visitedVertices.has(adjacency)) return;
+        queue.push(adjacency);
+        visitedVertices.add(adjacency);
+      });
+    }
+  }
+
+  dfs(startingVertex) {}
 }
 
 module.exports = Graph;

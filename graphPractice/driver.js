@@ -1,6 +1,6 @@
 const Graph = require("./graph");
 
-const g = new Graph(6);
+const g = new Graph();
 const vertices = ["A", "B", "C", "D", "E", "F"];
 
 // adding vertices
@@ -16,12 +16,6 @@ g.addEdge("E", "F");
 g.addEdge("E", "C");
 g.addEdge("C", "F");
 
-// prints all vertex and
-// its adjacency list
-// A -> B D E
-// B -> A C
-// C -> B E F
-// D -> A E
-// E -> A D F C
-// F -> E C
 g.printGraph();
+g.bfs("A"); // expect A B D E C F
+g.dfs("A"); // expect A B C E D F
