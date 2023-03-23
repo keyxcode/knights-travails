@@ -17,5 +17,5 @@ g.addEdge("E", "C");
 g.addEdge("C", "F");
 
 g.printGraph();
-g.bfs("A"); // expect A B D E C F
+// g.bfs("A"); // expect A B D E C F
 g.dfs("A"); // expect A B C E D F

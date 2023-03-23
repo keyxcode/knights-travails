@@ -52,7 +52,16 @@ class Graph {
     }
   }
 
-  dfs(startingVertex) {}
+  dfs(startingVertex, visitedVertices = new Set()) {
+    if (visitedVertices.has(startingVertex)) return;
+    console.log(startingVertex);
+    visitedVertices.add(startingVertex);
+
+    const adjacencies = this.adjList.get(startingVertex);
+    adjacencies.forEach((adjacency) => {
+      this.dfs(adjacency, visitedVertices);
+    });
+  }
 }
 
 module.exports = Graph;
