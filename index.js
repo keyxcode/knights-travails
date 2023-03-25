@@ -1,7 +1,10 @@
+const LOWER_LIMIT = 0;
+const UPPER_LIMIT = 7;
+const BOARD_SIZE = (UPPER_LIMIT - LOWER_LIMIT + 1) ** 2;
+
 function possibleNextLocations(current) {
   // current is an array of 2 elements representing x and y. Ex: [0, 1]
-  const LOWER_LIMIT = 0;
-  const UPPER_LIMIT = 7;
+
   const KNIGHT_MOVES = [
     [2, 1],
     [2, -1],
@@ -53,6 +56,21 @@ function knightMoves(current, destination) {
   }
 }
 
+function knightTours(start, visitedLocations = new Set()) {
+  if (visitedLocations.has(JSON.stringify(start))) return;
+  if (visitedLocations.size === BOARD_SIZE) {
+    return visitedLocations;
+  }
+
+  visitedLocations.add(JSON.stringify(start));
+  const nextLocations = possibleNextLocations(start);
+  nextLocations.forEach((location) => {
+    return knightTours(location, visitedLocations);
+  });
+
+  return visitedLocations;
+}
+
 function formatPathResult(path) {
   // Takes an array of array for example [[1, 2], [0, 0], [4, 7]]
   let printedPath = "";
@@ -67,4 +85,4 @@ function formatPathResult(path) {
   return `${pathLastIndex} moves : ${printedPath}`;
 }
 
-module.exports = { possibleNextLocations, knightMoves };
+module.exports = { possibleNextLocations, knightMoves, knightTours };
