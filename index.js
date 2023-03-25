@@ -33,6 +33,9 @@ function possibleNextLocations(current) {
 }
 
 function knightMoves(current, destination) {
+  // figures out the shortest path between current and destination using bfs
+  // current and destination are 2 elements arrays for example [1, 2], [0, 7]
+
   const queuedMoves = [{ location: current, pathToHere: [[current]] }];
   const visitedLocations = new Set(JSON.stringify(current));
 
@@ -57,6 +60,9 @@ function knightMoves(current, destination) {
 }
 
 function knightTours(start, visitedLocations = new Set()) {
+  // figures out the path to visit each square on the board exactly once using dfs
+  // start is the starting coord, a 2-element array e.g. [0, 2]
+
   if (visitedLocations.has(JSON.stringify(start))) return;
   if (visitedLocations.size === BOARD_SIZE) {
     return visitedLocations;
@@ -73,6 +79,7 @@ function knightTours(start, visitedLocations = new Set()) {
 
 function formatPathResult(path) {
   // Takes an array of array for example [[1, 2], [0, 0], [4, 7]]
+
   let printedPath = "";
   const pathLastIndex = path.length - 1;
   path.forEach((location, i) => {
