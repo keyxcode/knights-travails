@@ -7,4 +7,4 @@ const knightMoves = knightsModule.knightMoves;
 // console.log(possibleNextLocations([2, 1]));
 
 // Test knight moves
-console.log(knightMoves([0, 0], [7, 7]));
+console.log(knightMoves([2, 1], [7, 7]));

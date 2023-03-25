@@ -12,7 +12,7 @@ function possibleNextLocations(current) {
     [-1, 2],
     [-1, -2],
   ];
-  const possibleNextMoves = [];
+  const possibleNextLocations = [];
   KNIGHT_MOVES.forEach((move) => {
     const nextMoveX = move[0] + current[0];
     const nextMoveY = move[1] + current[1];
@@ -24,49 +24,33 @@ function possibleNextLocations(current) {
     ) {
       return;
     }
-    possibleNextMoves.push([nextMoveX, nextMoveY]);
+    possibleNextLocations.push([nextMoveX, nextMoveY]);
   });
-  return possibleNextMoves;
+  return possibleNextLocations;
 }
 
 function knightMoves(current, destination) {
-  const queuedMoves = [[current]];
-  const visitedLocations = [];
+  const queuedMoves = [{ location: current, pathToHere: [[current]] }];
+  const visitedLocations = new Set(JSON.stringify(current));
 
-  let numMoves = 0;
   while (queuedMoves.length) {
-    const moves = queuedMoves.shift();
-    // Analyze all the moves in a move array
-    while (moves.length) {
-      const move = moves.shift();
-
-      let alreadyVisited = false;
-      visitedLocations.forEach((location) => {
-        if (location[0] === move[0] && location[1] === move[1]) {
-          alreadyVisited = true;
-        }
-      });
-      if (alreadyVisited) break;
-
-      if (move[0] === destination[0] && move[1] === destination[1]) {
-        return numMoves;
-      } else {
-        visitedLocations.push(move);
-        queuedMoves.push(possibleNextLocations(move));
-      }
+    const currentMove = queuedMoves.shift();
+    const currentLocation = currentMove.location;
+    const currentPathToHere = currentMove.pathToHere;
+    if (JSON.stringify(currentLocation) === JSON.stringify(destination)) {
+      return currentPathToHere;
     }
-    numMoves++;
+
+    const nextLocations = possibleNextLocations(currentLocation);
+    nextLocations.forEach((location) => {
+      if (visitedLocations.has(location)) return;
+      queuedMoves.push({
+        location: location,
+        pathToHere: [...currentPathToHere, location],
+      });
+      visitedLocations.add[JSON.stringify(currentLocation)];
+    });
   }
 }
-
-// queue
-// visited
-// while (queue.length)
-//    possibleNextMoves = queue[0]
-//    while (possibleNextMoves.length)
-//        nextMove = possibleNextMoves.shift()
-//        if nextMove === destination return
-//        else
-//            queue.push(nextMove.possibleNextMoves) if not in visited[]
 
 module.exports = { possibleNextLocations, knightMoves };
