@@ -38,7 +38,7 @@ function knightMoves(current, destination) {
     const currentLocation = currentMove.location;
     const currentPathToHere = currentMove.pathToHere;
     if (JSON.stringify(currentLocation) === JSON.stringify(destination)) {
-      return currentPathToHere;
+      return formatPathResult(currentPathToHere);
     }
 
     const nextLocations = possibleNextLocations(currentLocation);
@@ -51,6 +51,20 @@ function knightMoves(current, destination) {
       visitedLocations.add[JSON.stringify(currentLocation)];
     });
   }
+}
+
+function formatPathResult(path) {
+  // Takes an array of array for example [[1, 2], [0, 0], [4, 7]]
+  let printedPath = "";
+  const pathLastIndex = path.length - 1;
+  path.forEach((location, i) => {
+    if (i === pathLastIndex) {
+      printedPath += `[${location}]`;
+      return;
+    }
+    printedPath += `[${location}] -> `;
+  });
+  return `${pathLastIndex} moves : ${printedPath}`;
 }
 
 module.exports = { possibleNextLocations, knightMoves };
